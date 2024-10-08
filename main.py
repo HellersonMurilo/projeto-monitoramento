@@ -64,7 +64,7 @@ def registrar_fim(tempo_atual):
         )
 
 # Função para enviar o relatório por e-mail
-def enviar_relatorio_email():
+def enviar_relatorio_email(ultimo_dia):
     remetente = "calabianquimurilo328@gmail.com"
     destinatario = "hellerson.souza@libbs.com.br"
     assunto = f"Relatório de Atividades do Dia - {usuario_local}"
@@ -73,7 +73,7 @@ def enviar_relatorio_email():
     with open(arquivo_log, "r") as file:
         conteudo = file.read()
 
-    corpo = f"Relatório de atividades de {usuario_local}:\n\n{conteudo}"
+    corpo = f"Relatório de atividades de {usuario_local} no dia {ultimo_dia}:\n\n{conteudo}"
 
     msg = MIMEText(corpo)
     msg["Subject"] = assunto
@@ -113,7 +113,7 @@ if not os.path.exists(arquivo_data):
 
 # Se a última data do log não for None, e a data atual é maior que a última data do log
 if ultima_data_log is not None and data_atual > ultima_data_log:
-    enviar_relatorio_email()  # Envia o e-mail com o log
+    enviar_relatorio_email(ultima_data_log)  # Envia o e-mail com o log
     os.remove(arquivo_log)  # Exclui o arquivo antigo
     # Cria um novo arquivo de log com cabeçalho
     with open(arquivo_log, "w", newline="") as file:
